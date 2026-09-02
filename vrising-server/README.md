@@ -33,7 +33,15 @@ Recommended host settings on M4 (already in the example JSON):
 - `ServerFps: 20`
 - autosave `120` seconds × `20` copies
 
-Passworded servers: join from the **in-game** browser (Play Online), not Steam overlay Join.
+## How players join
+
+V Rising uses **Steam sockets**, not a plain UDP connect like Enshrouded. Steam overlay Join does not work on a passworded dedicated server.
+
+1. **In-game list (best from the internet):** Play → Online Play → Find Servers → show passworded servers → search the name.
+2. **Direct Connect:** Play → Online → Direct Connect. The field accepts `IP:port` **or** the Steam GameServer ID.
+3. **Same LAN as the host:** `IP:port` often times out (Steam publishes the WAN address; NAT hairpin). Paste the GameServer ID instead. Print it with `./serverctl.sh steam-id` / `./serverctl.sh status`. It **changes every container start**, not every player join.
+
+UDP `27015`/`27016` still need to be forwarded for listing and for clients that do connect by IP.
 
 ## Crash loop (`illegal instruction`)
 
@@ -52,6 +60,7 @@ Dedicated worlds **do not pause** when empty. Stopping the container is the equi
 
 ```
 ./serverctl.sh stop | restart | status | logs
+./serverctl.sh steam-id        # Steam GameServer ID for Direct Connect
 ./serverctl.sh update
 ./serverctl.sh backup
 ./serverctl.sh health-check | doctor
@@ -73,4 +82,4 @@ Dedicated worlds **do not pause** when empty. Stopping the container is the equi
 
 ## Network
 
-Forward UDP `27015` and `27016` to the Mac LAN IP. From the same Wi-Fi, connect via LAN IP. See [docs/networking.md](../docs/networking.md).
+Forward UDP `27015` and `27016` to the Mac LAN IP. From the internet, join via the in-game list (or Direct Connect). From the same Wi-Fi, prefer the Steam GameServer ID, not `IP:port`. See [docs/networking.md](../docs/networking.md).

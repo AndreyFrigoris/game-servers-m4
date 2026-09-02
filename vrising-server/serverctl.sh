@@ -32,8 +32,30 @@ restart() {
   compose up -d
 }
 
+print_gameserver_steamid() {
+  local sid="" latest="" log_dir="$PROJECT_ROOT/vrising/persistentdata/logs"
+  if docker inspect -f '{{.State.Status}}' "$SERVICE_NAME" 2>/dev/null | rg -q '^running$'; then
+    sid="$(docker logs "$SERVICE_NAME" 2>&1 | rg -o 'Game server SteamID: [0-9]+' | tail -1 | rg -o '[0-9]+$' || true)"
+  fi
+  if [[ -z "$sid" && -d "$log_dir" ]]; then
+    latest="$(ls -t "$log_dir"/*.log 2>/dev/null | head -1 || true)"
+    if [[ -n "$latest" ]]; then
+      sid="$(rg -o 'Game server SteamID: [0-9]+' "$latest" | tail -1 | rg -o '[0-9]+$' || true)"
+    fi
+  fi
+  if [[ -n "$sid" ]]; then
+    echo "[OK] Steam GameServer ID (Direct Connect / ServerID): $sid"
+    echo "     Valid only for the process that logged it. Changes on every container start."
+    echo "     In-game: Play → Online → Direct Connect."
+  else
+    echo "[WARN] Steam GameServer ID not in logs yet (still booting, or Steam login failed)"
+  fi
+}
+
 status() {
   compose ps
+  echo
+  print_gameserver_steamid
 }
 
 logs() {
@@ -137,6 +159,8 @@ health_check() {
     has_warnings=1
   fi
 
+  print_gameserver_steamid
+
   if command -v nc >/dev/null 2>&1; then
     if nc -uz 127.0.0.1 27015 >/dev/null 2>&1 && nc -uz 127.0.0.1 27016 >/dev/null 2>&1; then
       echo "[OK] UDP ports 27015/27016 respond locally"
@@ -179,7 +203,8 @@ Commands:
   start           Start server in background
   stop            Stop server
   restart         Restart server
-  status          Show container status
+  status          Show container status + current Steam GameServer ID
+  steam-id        Print Steam GameServer ID for in-game Direct Connect
   logs            Tail server logs
   update          One-command update (steamcmd validate + restart)
   backup          Create backup archive now + prune old backups
@@ -208,6 +233,7 @@ main() {
     stop) stop "$@" ;;
     restart) restart "$@" ;;
     status) status "$@" ;;
+    steam-id) print_gameserver_steamid ;;
     logs) logs "$@" ;;
     update) update "$@" ;;
     backup) backup "$@" ;;

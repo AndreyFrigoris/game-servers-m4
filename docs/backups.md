@@ -2,6 +2,8 @@
 
 Backup **saves and live settings** only. SteamCMD can download the dedicated server again; it cannot download your world.
 
+Closing the game client or `./serverctl.sh stop` does **not** create a tar.gz. The dedicated server writes the live world into `persistentdata/` while it runs (and usually flushes on a graceful stop). `./serverctl.sh backup` (or the daily launchd job) is what snapshots those files into `backups/auto/`.
+
 ## What `./serverctl.sh backup` does
 
 - Enshrouded: `persistentdata/savegame` + `persistentdata/settings` → `backups/auto/enshrouded-backup-<timestamp>.tar.gz`

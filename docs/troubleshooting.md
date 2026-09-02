@@ -17,6 +17,8 @@ Remove it. The container should be ARM64; Box64 inside the image handles x86.
 
 NAT hairpin. From home, use the Mac’s **LAN IP**. From outside, use the public IP. Details: [networking.md](networking.md).
 
+**V Rising:** LAN/WAN `IP:port` may still time out. Play → Online → Direct Connect → Steam GameServer ID from `./serverctl.sh steam-id`. The ID changes every container start.
+
 ## Passworded server is invisible / join fails from Steam
 
 Use the in-game dedicated browser, not Steam overlay Join.

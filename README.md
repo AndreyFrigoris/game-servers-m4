@@ -21,7 +21,7 @@ It is a real working tree, not a gist: clone it, copy the example configs, start
 |---|---|---|---|---|---|
 | [Enshrouded](enshrouded-server/) | Working (CPU-bound under Box64) | `enshrouded-server/` | UDP `15636`, `15637` | ~8–12 GB | 4–6 GB |
 | [V Rising](vrising-server/) | Working, Box64-sensitive | `vrising-server/` | UDP `27015`, `27016` | ~3–5 GB | 4–6 GB |
-| ARK: Survival Evolved | Next | — | (map-dependent; avoid `27015` if V Rising is up) | **30–60 GB** | 8–12 GB |
+| ARK: Survival Evolved | Planned | — | (map-dependent; avoid `27015` if V Rising is up) | **30–60 GB** | 8–12 GB |
 | The Forest | Planned | — | UDP `27015` — **conflicts with V Rising** | ~6–10 GB | 4–6 GB |
 | Valheim | Planned | — | UDP `2456–2457` | ~3–5 GB | 2–4 GB |
 

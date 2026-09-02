@@ -13,15 +13,19 @@ mkdir -p vrising/persistentdata/Settings
 cp examples/emulators.rc examples/ServerHostSettings.json \
    vrising/persistentdata/Settings/
 # set Name / Password in ServerHostSettings.json
-./serverctl.sh start
+./serverctl.sh update         # first install: SteamCMD (daily start skips it)
 ./serverctl.sh logs
 ```
 
-`./serverctl.sh update` runs SteamCMD `app_update 1829350 validate` and then **rewrites** `vrising/server/steam_appid.txt` to `1604030`. If you skip that step after a manual update, the process can misbehave.
+Daily `start` does **not** run SteamCMD (set `RUN_STEAMCMD=1` only if you mean it). `./serverctl.sh update` is the path that validates game files, then the wrapper hides Burst again and **rewrites** `vrising/server/steam_appid.txt` to `1604030`.
 
-## Box64
+## Box64 / Unity Burst
 
 Copy `examples/emulators.rc` into `vrising/persistentdata/Settings/emulators.rc` (the image loads it at start). Use the conservative profile; do not turn on bleeding-edge dynarec on a world you care about. Details: [docs/box64.md](../docs/box64.md).
+
+Unity Burst (`lib_burst_generated.dll`) triggers a Box64 `illegal instruction` crash on Apple Silicon during engine init — **before** the world loads. `scripts/start-wrapper.sh` hides that DLL after every SteamCMD validate (validate would restore it). Simulation falls back to non-Burst code; the world still loads.
+
+If you ever restore the DLL by hand, the crash loop comes back.
 
 Recommended host settings on M4 (already in the example JSON):
 
@@ -33,7 +37,7 @@ Passworded servers: join from the **in-game** browser (Play Online), not Steam o
 
 ## Crash loop (`illegal instruction`)
 
-If Wine reports `Unhandled illegal instruction` in `lib_burst_generated` / `GameAssembly` / `UnityPlayer`:
+The stock image crashes in Unity Burst on M4. `compose.yml` already runs `scripts/start-wrapper.sh`, which disables `lib_burst_generated.dll` after SteamCMD. If you bypass the wrapper, the loop comes back.
 
 ```bash
 ./serverctl.sh stop          # compose restart policy will otherwise loop

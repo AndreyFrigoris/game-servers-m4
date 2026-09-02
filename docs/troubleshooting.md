@@ -27,13 +27,17 @@ CPU/Box64 tick budget, not RAM. Lower slots, spawners, weather. See [box64.md](b
 
 ## V Rising: crash loop, `illegal instruction`
 
-Stop the container so it cannot restart forever:
+Almost always Unity Burst (`lib_burst_generated.dll`) under Box64, during engine init — **before** the world loads. The save is usually fine.
+
+This repo’s `vrising-server/scripts/start-wrapper.sh` (compose entrypoint) hides that DLL on every start and **skips SteamCMD** on a normal boot. Stock image `start.sh` runs `app_update validate` every time, which restores the DLL and can also fail with SteamCMD `state is 0x6`.
 
 ```bash
-./serverctl.sh stop
+./serverctl.sh stop          # restart: unless-stopped will otherwise loop
+# do not restore lib_burst_generated.dll
+./serverctl.sh start
 ```
 
-Then the Box64 checklist in [box64.md](box64.md). After `./serverctl.sh update`, rewrite `vrising/server/steam_appid.txt` to `1604030` (the script does this).
+Game file updates: `./serverctl.sh update` only. After update the wrapper hides Burst again and rewrites `steam_appid.txt` to `1604030`. Box64 checklist: [box64.md](box64.md).
 
 ## External SSD / Docker disk
 

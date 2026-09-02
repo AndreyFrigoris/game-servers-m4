@@ -1,6 +1,7 @@
 # -----------------------------------------------------------------------------
 # Private / this machine only — never publish
 # -----------------------------------------------------------------------------
+AGENTS.md
 AGENTS.local.md
 *.local.md
 .env
@@ -29,6 +30,9 @@ vrising-server/vrising/server/
 **/.DS_Store
 .metadata_never_index
 compose.box64.yml
+compose.debug.yml
+**/scripts/debug-start.sh
+
 *.swp
 .idea/
 .vscode/

@@ -9,6 +9,10 @@ services:
     volumes:
       - ./vrising/server:/mnt/vrising/server
       - ./vrising/persistentdata:/mnt/vrising/persistentdata
+      - ./scripts/start-wrapper.sh:/start-wrapper.sh:ro
+    entrypoint:
+      - /bin/bash
+      - /start-wrapper.sh
     ports:
       - "27015:27015/udp"
       - "27016:27016/udp"

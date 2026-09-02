@@ -21,9 +21,9 @@ It is a real working tree, not a gist: clone it, copy the example configs, start
 |---|---|---|---|---|---|
 | [Enshrouded](enshrouded-server/) | Working (CPU-bound under Box64) | `enshrouded-server/` | UDP `15636`, `15637` | ~8–12 GB | 4–6 GB |
 | [V Rising](vrising-server/) | Working, Box64-sensitive | `vrising-server/` | UDP `27015`, `27016` | ~3–5 GB | 4–6 GB |
-| Valheim | Planned | — | UDP `2456–2457` | ~3–5 GB | 2–4 GB |
+| ARK: Survival Evolved | Next | — | (map-dependent; avoid `27015` if V Rising is up) | **30–60 GB** | 8–12 GB |
 | The Forest | Planned | — | UDP `27015` — **conflicts with V Rising** | ~6–10 GB | 4–6 GB |
-| ARK: Survival Evolved | Planned | — | (map-dependent) | **30–60 GB** | 8–12 GB |
+| Valheim | Planned | — | UDP `2456–2457` | ~3–5 GB | 2–4 GB |
 
 ---
 
@@ -59,7 +59,7 @@ Common commands (every game):
 ./serverctl.sh launchd-install     # daily backup on macOS (default 06:00)
 ```
 
-First `start` downloads the dedicated server through SteamCMD. That can take several minutes and several gigabytes.
+First install downloads the dedicated server through SteamCMD (`./serverctl.sh update`, or the image’s first start — V Rising skips SteamCMD on a normal `start`, so run `update` once). That can take several minutes and several gigabytes.
 
 ---
 
@@ -82,8 +82,8 @@ Clone this onto the machine that will host. Your live world stays next to the te
 | Path | Git |
 |---|---|
 | `compose.yml`, `serverctl.sh`, `scripts/`, `examples/` | public |
-| `README.md`, `docs/`, `AGENTS.md` | public |
-| `.env`, `AGENTS.local.md` | **ignored** |
+| `README.md`, `docs/` | public |
+| Host operator notes (`AGENTS.md`), `.env`, `AGENTS.local.md` | **ignored** |
 | `persistentdata/` (saves + live settings + passwords) | **ignored** |
 | `backups/` | **ignored** |
 | SteamCMD trees (`EnshroudedServer/`, `vrising/server/`) | **ignored** |
@@ -96,7 +96,7 @@ If you fork this, keep the same split. A leaked `persistentdata/settings/*.json`
 
 The bottleneck is almost always **CPU time inside Box64**, not RAM. Enshrouded’s “hosting load” bar is a tick-budget indicator; two players can trip `SERVER OVERLOADED` even with free memory. Turn down simulation (slots, spawners, weather) before you buy RAM.
 
-ARK on 16 GB is realistic only as the **only** heavy server. Running it together with Enshrouded is not.
+ARK on 16 GB is realistic only as the **only** heavy server. Stop Enshrouded / V Rising before starting it. A fast SSD helps: ARK writes large save files in bursts.
 
 ---
 

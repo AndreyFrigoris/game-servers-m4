@@ -49,13 +49,13 @@ The git root is a host directory that you actually run from (`GameServers/` on t
 | Live settings + saves | `persistentdata/` | **yes** | no |
 | Steam binaries | `EnshroudedServer/`, `vrising/server/` | no — re-download | no |
 
-If a container image updates SteamCMD files on every start, that is expected. Saves must never live only inside the image.
+If a container image updates SteamCMD files on every start, that can fight you: V Rising’s stock entrypoint re-downloads Burst SIMD that Box64 cannot run. Override with a wrapper (`start-wrapper.sh`) and keep SteamCMD on `./serverctl.sh update`, not on every boot. Saves must never live only inside the image.
 
 ## Images used here
 
 These are community ARM64 images, not official publisher images:
 
 - Enshrouded: [`tsxcloud/enshrouded-arm`](https://hub.docker.com/r/tsxcloud/enshrouded-arm)
-- V Rising: [`tsxcloud/vrising-ntsync`](https://hub.docker.com/r/tsxcloud/vrising-ntsync) (Wine + Box64 + NTsync)
+- V Rising: [`tsxcloud/vrising-ntsync`](https://hub.docker.com/r/tsxcloud/vrising-ntsync) (Wine + Box64 + NTsync). Compose overrides the entrypoint with `scripts/start-wrapper.sh` so Unity Burst is disabled and SteamCMD does not run on every boot.
 
 Pinning a digest is safer for a family server that already works. `latest` is convenient and is what this repo’s compose files use.

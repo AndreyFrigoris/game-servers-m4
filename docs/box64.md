@@ -35,9 +35,10 @@ Typical stack: `lib_burst_generated` / `GameAssembly` / `UnityPlayer` → Wine `
 
 What to try, in order:
 
-1. Confirm the conservative Box64 profile is actually loaded (it should print at container start).
-2. Cap server FPS (V Rising: `ServerFps: 20`).
-3. Delete `.TEMP` under the save folder, then start once.
-4. Do **not** chase it by setting `platform: linux/amd64`.
+1. **V Rising on Apple Silicon:** hide `VRisingServer_Data/Plugins/x86_64/lib_burst_generated.dll` after SteamCMD (this repo’s `start-wrapper.sh` does that). Burst SIMD is what Box64 chokes on; the crash happens at Unity init, not while loading the save.
+2. Confirm the conservative Box64 profile is actually loaded (it should print at container start).
+3. Cap server FPS (V Rising: `ServerFps: 20`).
+4. Delete `.TEMP` under the save folder, then start once.
+5. Do **not** chase it by setting `platform: linux/amd64`.
 
 If it still loops, stop the container (`restart: unless-stopped` will otherwise spin) and look at the last log before the Wine debugger. Game updates via SteamCMD can resurrect a crash that was already “fixed”.

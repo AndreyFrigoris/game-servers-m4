@@ -1,0 +1,35 @@
+# -----------------------------------------------------------------------------
+# Private / this machine only — never publish
+# -----------------------------------------------------------------------------
+AGENTS.local.md
+*.local.md
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# -----------------------------------------------------------------------------
+# Steam dedicated-server binaries (downloaded by SteamCMD, not ours to ship)
+# -----------------------------------------------------------------------------
+enshrouded-server/EnshroudedServer/
+vrising-server/vrising/server/
+
+# -----------------------------------------------------------------------------
+# Live world data: saves, passwords, logs, backup archives
+# -----------------------------------------------------------------------------
+**/persistentdata/
+**/backups/
+**/*.log
+**/.TEMP/
+
+# -----------------------------------------------------------------------------
+# Local leftovers
+# -----------------------------------------------------------------------------
+.DS_Store
+**/.DS_Store
+.metadata_never_index
+compose.box64.yml
+*.swp
+.idea/
+.vscode/
+.cursor/

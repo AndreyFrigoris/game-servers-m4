@@ -1,0 +1,18 @@
+### BOX64 block. Description and more settings: https://github.com/ptitSeb/box64/blob/main/docs/USAGE.md
+
+#BOX64_LOG=0
+# Conservative Box64 profile for V Rising on Apple Silicon.
+# Lower performance, better stability under load / multiplayer sync.
+BOX64_DYNAREC_STRONGMEM=1
+BOX64_DYNAREC_BIGBLOCK=0
+BOX64_DYNAREC_SAFEFLAGS=1
+BOX64_DYNAREC_FASTNAN=0
+BOX64_DYNAREC_FASTROUND=0
+BOX64_DYNAREC_X87DOUBLE=1
+BOX64_DYNAREC_BLEEDING_EDGE=0
+
+
+### FEX-EMU Block. Description and more settings: https://github.com/FEX-Emu/FEX/blob/main/FEXCore/Source/Interface/Config/Config.json.in
+
+# These settings reduce performance but increase compatibility:
+#FEX_PARANOIDTSO=true

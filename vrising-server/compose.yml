@@ -1,0 +1,18 @@
+services:
+  vrising:
+    image: tsxcloud/vrising-ntsync:latest
+    container_name: vrising
+    environment:
+      - TZ=${TZ:-UTC}
+      - SERVERNAME=${SERVERNAME:-My V Rising Server}
+      - ENABLE_PLUGINS=${ENABLE_PLUGINS:-false}
+    volumes:
+      - ./vrising/server:/mnt/vrising/server
+      - ./vrising/persistentdata:/mnt/vrising/persistentdata
+    ports:
+      - "27015:27015/udp"
+      - "27016:27016/udp"
+      - "25575:25575/tcp"
+    restart: unless-stopped
+    stop_grace_period: 30s
+    network_mode: bridge

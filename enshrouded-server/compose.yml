@@ -1,0 +1,19 @@
+services:
+  enshrouded:
+    image: tsxcloud/enshrouded-arm:latest
+    container_name: enshrouded
+
+    ports:
+      - "15636:15636/udp"
+      - "15637:15637/udp"
+
+    volumes:
+      - ./EnshroudedServer:/mnt/enshrouded/server
+      - ./persistentdata:/mnt/enshrouded/persistentdata
+      - ./run.sh:/run.sh:ro
+
+    entrypoint:
+      - /bin/bash
+      - /run.sh
+
+    restart: unless-stopped

@@ -1,0 +1,24 @@
+{
+  "Name": "My V Rising Server",
+  "Description": "Private PvE dedicated server",
+  "Port": 27015,
+  "QueryPort": 27016,
+  "Address": "0.0.0.0",
+  "MaxConnectedUsers": 2,
+  "MaxConnectedAdmins": 2,
+  "ServerFps": 20,
+  "SaveName": "world1",
+  "Password": "",
+  "Secure": true,
+  "ListOnSteam": true,
+  "ListOnEOS": true,
+  "AutoSaveCount": 20,
+  "AutoSaveInterval": 120,
+  "GameSettingsPreset": "",
+  "GameDifficultyPreset": "",
+  "Rcon": {
+    "Enabled": false,
+    "Port": 25575,
+    "Password": ""
+  }
+}

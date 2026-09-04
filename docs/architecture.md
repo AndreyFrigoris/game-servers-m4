@@ -47,7 +47,7 @@ The git root is a host directory that you actually run from (`GameServers/` on t
 |---|---|---|---|
 | Glue | `compose.yml`, `serverctl.sh` | no (it’s in git) | yes |
 | Live settings + saves | `persistentdata/` | **yes** | no |
-| Steam binaries | `EnshroudedServer/`, `vrising/server/` | no — re-download | no |
+| Steam binaries | `EnshroudedServer/`, `vrising/server/`, `ark-server/server/` | no — re-download | no |
 
 If a container image updates SteamCMD files on every start, that can fight you: V Rising’s stock entrypoint re-downloads Burst SIMD that Box64 cannot run. Override with a wrapper (`start-wrapper.sh`) and keep SteamCMD on `./serverctl.sh update`, not on every boot. Saves must never live only inside the image.
 
@@ -57,5 +57,6 @@ These are community ARM64 images, not official publisher images:
 
 - Enshrouded: [`tsxcloud/enshrouded-arm`](https://hub.docker.com/r/tsxcloud/enshrouded-arm)
 - V Rising: [`tsxcloud/vrising-ntsync`](https://hub.docker.com/r/tsxcloud/vrising-ntsync) (Wine + Box64 + NTsync). Compose overrides the entrypoint with `scripts/start-wrapper.sh` so Unity Burst is disabled and SteamCMD does not run on every boot.
+- ARK: Survival Evolved: [`sonroyaalmerol/steamcmd-arm64`](https://hub.docker.com/r/sonroyaalmerol/steamcmd-arm64) (Box64, no Wine — Linux dedicated server). Compose entrypoint is `scripts/start-wrapper.sh`; SteamCMD is `./serverctl.sh update` only (`-beta preaquatica` by default).
 
 Pinning a digest is safer for a family server that already works. `latest` is convenient and is what this repo’s compose files use.

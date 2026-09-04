@@ -8,6 +8,32 @@ Forward **UDP** (and TCP only if you really enabled RCON) from the router to the
 |---|---|---|---|
 | Enshrouded | UDP `15636` | UDP `15637` | — |
 | V Rising | UDP `27015` | UDP `27016` | TCP `25575` only if RCON is on |
+| ARK: SE | UDP `7777` | UDP `27017` | UDP `7778` (peer = game+1; always forward it too) |
+
+ARK’s Steam query is **`27017`**, not the engine default `27015`, so it does not collide with V Rising. If you change the game port, the peer port is always **game+1** and must be forwarded as UDP as well.
+
+## How a port forward works (plain language)
+
+The internet can only see your router. The Mac is inside the house. A port forward is a sticky note on the router: “when a packet arrives for this UDP port, send it to this LAN IP, same port.”
+
+You already did this for Enshrouded and V Rising. ARK is three more rows in the **same** list.
+
+1. From a browser on the home Wi-Fi, open the router admin page (often `192.168.1.1` or `192.168.0.1`; printed on the router sticker).
+2. Log in. Find **Port Forwarding** / **Virtual Server** / **Проброс портов** / **NAT** — not “port triggering”, not “DMZ”, not “UPnP” as the only plan.
+3. Add **three UDP rules**, all pointing at the Mac’s LAN IPv4 (DHCP reservation, same address you used for the other games):
+
+| Name (any label) | Protocol | External port | Internal port | Internal IP |
+|---|---|---|---|---|
+| ARK game | **UDP** | `7777` | `7777` | Mac LAN IP |
+| ARK peer | **UDP** | `7778` | `7778` | Mac LAN IP |
+| ARK query | **UDP** | `27017` | `27017` | Mac LAN IP |
+
+4. Save / apply. A reboot is rarely required.
+5. Leave the Enshrouded and V Rising rows as they are. You do not run those at the same time as ARK on 16 GB, but the forwards can stay.
+
+Wrong protocol (TCP only) = the row exists and still nothing joins. “Both” is fine if the UI has no UDP-only choice; UDP is what ARK uses.
+
+From the same Wi-Fi, players connect to **LAN IP:`7777`**. From outside the house, **public IP:`7777`**. Details on NAT hairpin above.
 
 Pick **one LAN IP** and keep it (DHCP reservation). If two games want the same port, change one of them *before* the first start.
 

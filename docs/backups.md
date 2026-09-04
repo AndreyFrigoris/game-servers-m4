@@ -8,6 +8,7 @@ Closing the game client or `./serverctl.sh stop` does **not** create a tar.gz. T
 
 - Enshrouded: `persistentdata/savegame` + `persistentdata/settings` → `backups/auto/enshrouded-backup-<timestamp>.tar.gz`
 - V Rising: `vrising/persistentdata` → `backups/auto/vrising-backup-<timestamp>.tar.gz`
+- ARK: `persistentdata` (`SavedArks`, `Config`, logs) → `backups/auto/ark-backup-<timestamp>.tar.gz`
 
 Retention defaults to **14 days** (`BACKUP_RETENTION_DAYS`). `./serverctl.sh backup-prune` only deletes old archives.
 
@@ -38,7 +39,7 @@ If you already installed an agent under an old label, reinstalling with a new de
 ## Restore
 
 1. `./serverctl.sh stop`
-2. Extract the archive back over `persistentdata/` (Enshrouded) or `vrising/persistentdata/` (V Rising).
+2. Extract the archive back over `persistentdata/` (Enshrouded, ARK) or `vrising/persistentdata/` (V Rising).
 3. `./serverctl.sh start`
 
 Do not restore Steam binaries from a backup unless you have a reason — `./serverctl.sh update` is cleaner.

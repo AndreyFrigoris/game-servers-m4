@@ -54,6 +54,16 @@ If Steam files or `Docker.raw` live on an external APFS volume:
 - Docker images you no longer use: `docker image ls` then `docker image rm`. Do this only when no server needs that image.
 - Docker’s virtual disk size is independent of the physical SSD size. Raise it in Docker Desktop after the VM disk already lives on the big volume.
 
+## ARK: version mismatch / “incompatible”
+
+This repo’s dedicated server tracks Steam beta **`preaquatica`**. Clients on the live/Aquatica build will not stay connected. Steam → ARK → Properties → Betas → `preaquatica`.
+
+## ARK: do not start next to Enshrouded / V Rising
+
+`ark-server/serverctl.sh start` refuses if those containers are running. 16 GB is not enough for two heavy worlds. Stop the others first.
+
+First boot of The Island under Box64 can sit for a long time before it listens. Watch `./serverctl.sh logs` for a startup-complete line before you assume it is dead.
+
 ## World pause
 
 Dedicated servers generally **do not pause** when nobody is online (unlike a listen/private host). The equivalent is `./serverctl.sh stop`.

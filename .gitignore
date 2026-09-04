@@ -14,6 +14,11 @@ AGENTS.local.md
 # -----------------------------------------------------------------------------
 enshrouded-server/EnshroudedServer/
 vrising-server/vrising/server/
+ark-server/server/
+ark-server/.steamcmd/
+ark-server/.steam-home/
+# Host-only experiment (not a published recipe)
+sunkenland-server/
 
 # -----------------------------------------------------------------------------
 # Live world data: saves, passwords, logs, backup archives

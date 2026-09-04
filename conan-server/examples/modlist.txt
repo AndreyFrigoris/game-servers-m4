@@ -1,0 +1,4 @@
+# One .pak path per line after a vanilla join works.
+# Workshop files live under the Steam tree; point at the .pak, not the folder.
+# Example:
+# /mnt/conan/server/steamapps/workshop/content/440900/1111111111/SomeMod.pak

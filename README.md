@@ -22,6 +22,7 @@ It is a real working tree, not a gist: clone it, copy the example configs, start
 | [Enshrouded](enshrouded-server/) | Working (CPU-bound under Box64) | `enshrouded-server/` | UDP `15636`, `15637` | ~8–12 GB | 4–6 GB |
 | [V Rising](vrising-server/) | Working, Box64-sensitive | `vrising-server/` | UDP `27015`, `27016` | ~3–5 GB | 4–6 GB |
 | [ARK: Survival Evolved](ark-server/) | Files install; join not confirmed on this host | `ark-server/` | UDP `7777`, `7778`, `27017` | **30–60 GB** | 8–12 GB |
+| [Conan Exiles Enhanced](conan-server/) | Working (RAM-heavy under Box64) | `conan-server/` | UDP `7787`, `7788`, `27019` | ~5–8 GB | **~10–12 GB** |
 | The Forest | Planned | — | UDP `27015` — **conflicts with V Rising** | ~6–10 GB | 4–6 GB |
 | Valheim | Planned | — | UDP `2456–2457` | ~3–5 GB | 2–4 GB |
 
@@ -86,7 +87,7 @@ Clone this onto the machine that will host. Your live world stays next to the te
 | Host operator notes (`AGENTS.md`), `.env`, `AGENTS.local.md` | **ignored** |
 | `persistentdata/` (saves + live settings + passwords) | **ignored** |
 | `backups/` | **ignored** |
-| SteamCMD trees (`EnshroudedServer/`, `vrising/server/`, `ark-server/server/`) | **ignored** |
+| SteamCMD trees (`EnshroudedServer/`, `vrising/server/`, `ark-server/server/`, `conan-server/server/`) | **ignored** |
 
 If you fork this, keep the same split. A leaked `persistentdata/settings/*.json` is a leaked server password.
 
@@ -96,7 +97,7 @@ If you fork this, keep the same split. A leaked `persistentdata/settings/*.json`
 
 The bottleneck is almost always **CPU time inside Box64**, not RAM. Enshrouded’s “hosting load” bar is a tick-budget indicator; two players can trip `SERVER OVERLOADED` even with free memory. Turn down simulation (slots, spawners, weather) before you buy RAM.
 
-ARK on 16 GB is realistic only as the **only** heavy server. Stop Enshrouded / V Rising before starting it. A fast SSD helps: ARK writes large save files in bursts.
+ARK or Conan on 16 GB is realistic only as the **only** heavy server. Stop the others first. Conan Enhanced wants a **12 GB Docker VM** (the process sits near 10–11 GB after world load). Raise Memory in Docker Desktop before the first start, or the process is OOM-killed after a successful `Startup report`.
 
 ---
 

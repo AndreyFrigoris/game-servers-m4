@@ -9,6 +9,7 @@ Forward **UDP** (and TCP only if you really enabled RCON) from the router to the
 | Enshrouded | UDP `15636` | UDP `15637` | — |
 | V Rising | UDP `27015` | UDP `27016` | TCP `25575` only if RCON is on |
 | ARK: SE | UDP `7777` | UDP `27017` | UDP `7778` (peer = game+1; always forward it too) |
+| Conan Exiles | UDP `7787` | UDP `27019` | UDP `7788` (peer = game+1; always forward it too) |
 
 ARK’s Steam query is **`27017`**, not the engine default `27015`, so it does not collide with V Rising. If you change the game port, the peer port is always **game+1** and must be forwarded as UDP as well.
 

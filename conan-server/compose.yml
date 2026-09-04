@@ -1,0 +1,43 @@
+services:
+  conan:
+    image: sonroyaalmerol/steamcmd-arm64:latest
+    container_name: conan
+    environment:
+      - TZ=${TZ:-UTC}
+      - SERVER_NAME=${SERVER_NAME:-My Conan Server}
+      - MAP=${MAP:-ExiledLands}
+      - GAME_PORT=${GAME_PORT:-7787}
+      - QUERY_PORT=${QUERY_PORT:-27019}
+      - MAX_PLAYERS=${MAX_PLAYERS:-2}
+      - SERVER_PASSWORD=${SERVER_PASSWORD:-}
+      - SteamAppId=440900
+      - SteamAppID=440900
+      - RUN_STEAMCMD=${RUN_STEAMCMD:-0}
+      - ARM64_DEVICE=${ARM64_DEVICE:-generic}
+      - BOX64_DYNAREC_STRONGMEM=1
+      - BOX64_DYNAREC_BIGBLOCK=0
+      - BOX64_DYNAREC_SAFEFLAGS=1
+      - BOX64_DYNAREC_FASTNAN=0
+      - BOX64_DYNAREC_FASTROUND=0
+      - BOX64_DYNAREC_X87DOUBLE=1
+      - BOX64_DYNAREC_BLEEDING_EDGE=0
+    volumes:
+      - ./server:/mnt/conan/server
+      - ./persistentdata:/mnt/conan/server/ConanSandbox/Saved
+      - ./mods:/mnt/conan/server/ConanSandbox/Mods
+      - ./scripts/start-wrapper.sh:/start-wrapper.sh:ro
+    entrypoint:
+      - /bin/bash
+      - /start-wrapper.sh
+    ports:
+      - "0.0.0.0:7787:7787/udp"
+      - "0.0.0.0:7788:7788/udp"
+      - "0.0.0.0:27019:27019/udp"
+    shm_size: "1gb"
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    restart: unless-stopped
+    stop_grace_period: 90s
+    network_mode: bridge

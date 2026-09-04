@@ -17,8 +17,10 @@ vrising-server/vrising/server/
 ark-server/server/
 ark-server/.steamcmd/
 ark-server/.steam-home/
-# Host-only experiment (not a published recipe)
-sunkenland-server/
+conan-server/server/
+conan-server/.steamcmd/
+conan-server/.steam-home/
+conan-server/mods/
 
 # -----------------------------------------------------------------------------
 # Live world data: saves, passwords, logs, backup archives

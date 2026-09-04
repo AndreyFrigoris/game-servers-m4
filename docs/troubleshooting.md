@@ -64,6 +64,28 @@ This repo’s dedicated server tracks Steam beta **`preaquatica`**. Clients on t
 
 First boot of The Island under Box64 can sit for a long time before it listens. Watch `./serverctl.sh logs` for a startup-complete line before you assume it is dead.
 
+## Conan: SteamCMD “success” but no server
+
+App `443030` defaults to the Windows depot. Without `@sSteamCmdForcePlatformType linux` SteamCMD can print a happy exit and leave an empty folder. `./serverctl.sh update` forces Linux and checks that `ConanSandboxServer-Linux-Shipping` exists.
+
+## Conan: do not start next to other heavies
+
+Same 16 GB rule as ARK. Give Docker Desktop **12 GB** RAM. `conan-server/serverctl.sh start` refuses if Enshrouded, V Rising, or ARK is up.
+
+Clients must be **Enhanced** (current Steam default), launched **without BattlEye** if the server has `IsBattlEyeEnabled=False`. Edit `ServerSettings.ini` only while the container is stopped.
+
+## Conan: “password not valid” / UniqueId INVALID
+
+The password in `ServerSettings.ini` is often fine. The dedicated process needs Steam OSS (`steamclient.so` + client AppId `440900`). Without it, joins close immediately and the client lies about the password. Local Steam, not GeForce Now. Fully quit the client before retrying.
+
+## Conan: “could not find server” / connection timed out
+
+Direct Connect must include the game port: `LAN-IP:7787`. Omitting the port sends the client to **7777**.
+
+If logs show `NetDriverListenFailure` / SteamSockets `SO_BROADCAST` and no `IpNetDriver listening on port 7787`, SteamSockets stole the bind. Keep `bUseSteamNetworking=false` and the `IpNetDriver` block in `Engine.ini`.
+
+Query is **`27019`** in this repo so it does not collide with Steam’s own bind on `27018`. Forward UDP `7787`, `7788`, and `27019`. From home Wi-Fi use the LAN IP (NAT hairpin).
+
 ## World pause
 
 Dedicated servers generally **do not pause** when nobody is online (unlike a listen/private host). The equivalent is `./serverctl.sh stop`.

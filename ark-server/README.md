@@ -4,7 +4,7 @@ Image: [`sonroyaalmerol/steamcmd-arm64`](https://hub.docker.com/r/sonroyaalmerol
 Steam app: `376030`. Default branch in this repo: **`preaquatica`** (mod-friendly; clients must match).  
 Ports: **UDP `7777`** (game), **UDP `7778`** (peer = game+1), **UDP `27017`** (Steam query). Query is **not** `27015` so it does not collide with V Rising.
 
-On 16 GB this is the **only** heavy server. `./serverctl.sh start` refuses to run if Enshrouded or V Rising is already up.
+On 16 GB this is the **only** heavy server. `./serverctl.sh start` refuses to run if Enshrouded, V Rising, or Conan is already up.
 
 ## Start
 

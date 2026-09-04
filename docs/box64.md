@@ -4,7 +4,7 @@ Box64 translates x86_64 code to ARM at run time. For Unity / Unreal dedicated se
 
 ## Conservative profile
 
-Stability over peak FPS. Drop this in the image’s `emulators.rc` (V Rising: `persistentdata/Settings/emulators.rc`; ARK: `persistentdata/emulators.rc`):
+Stability over peak FPS. Drop this in the image’s `emulators.rc` (V Rising: `persistentdata/Settings/emulators.rc`; ARK / Conan: `persistentdata/emulators.rc`):
 
 ```
 BOX64_DYNAREC_STRONGMEM=1
